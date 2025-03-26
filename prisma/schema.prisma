@@ -26,6 +26,6 @@ model Employee {
   email         String     @unique
   created_at    DateTime   @default(now())
   salary        Int
-  department    Department @relation(fields: [department_id], references: [id])
+  department    Department @relation(fields: [department_id], references: [id], onDelete: Cascade)
   department_id Int
 }
