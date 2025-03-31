@@ -13,19 +13,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Department {
-  id         Int        @id @default(autoincrement())
-  name       String?
-  created_at DateTime   @default(now())
-  employee   Employee[]
+model User {
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String   @unique
+  address    String?
+  phone      String   @unique
+  created_at DateTime @default(now())
+
+  post    Post[]
+  comment Comment[]
 }
 
-model Employee {
-  id            Int        @id @default(autoincrement())
-  name          String?
-  email         String     @unique
-  created_at    DateTime   @default(now())
-  salary        Int
-  department    Department @relation(fields: [department_id], references: [id], onDelete: Cascade)
-  department_id Int
+model Post {
+  id            Int      @id @default(autoincrement())
+  description   String
+  title         String
+  created_at    DateTime @default(now())
+  comment_count Int?      @default(0)
+
+  user_id Int
+  user    User      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  comment Comment[]
+}
+
+model Comment {
+  id         String   @id @default(uuid())
+  comment    String
+  created_at DateTime @default(now())
+
+  post_id Int
+  post    Post @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

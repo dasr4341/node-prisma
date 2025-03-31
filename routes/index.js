@@ -1,18 +1,10 @@
 import { Router } from "express";
-import UserRoutes from "./userRoutes.js";
-import DeptRoutes from "./deptRoutes.js";
-// import PostRoutes from "./postRoute.js";
-// import CommentRoutes from "./commentRoutes.js";
+import userRouter from './user.routes.js'
+import postRoutes from './post.routes.js'
 
 const router = Router();
 
-router.use("/api/user", UserRoutes);
-router.use("/api/dept", DeptRoutes);
-
-// * For Post Routes
-// router.use("/api/post", PostRoutes);
-
-// // * For Post Routes
-// router.use("/api/comment", CommentRoutes);
+router.use('/api/user', userRouter);
+router.use('/api/post', postRoutes);
 
 export default router;
